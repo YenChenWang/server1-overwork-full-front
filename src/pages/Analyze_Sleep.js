@@ -47,12 +47,13 @@ export default class HeartRateSleep extends PureComponent {
   // 取得 Sleeps 的所有資料，uat = userAccessToken
   async getSleepsOptions(uat) {
     const response = await axios.post('http://localhost:5000/sleepsanalyze', { uat });
-    console.log(response.data);
-    if (response.data === []) {
+    if (response.data == '') {
+      this.setState({ SleepData: response.data }); //將內部陣列存入外層陣列
       alert('無資料');
+    } else {
+      console.log(response.data);
+      this.setState({SleepData: response.data}); //將內部陣列存入外層陣列
     }
-    this.setState({SleepData: response.data}); //將內部陣列存入外層陣列
-
   }
 
 
@@ -97,7 +98,7 @@ export default class HeartRateSleep extends PureComponent {
                 <Select options={this.state.selectWatchOptions} 
                         onChange={this.handleChangeWatch.bind(this)} />
                 <br />
-                <Header style={h2}>11月7日睡眠狀態（秒）</Header>
+                <Header style={h2}>11月7日睡眠狀態</Header>
                   <Container style={line}></Container>
                   <ResponsiveContainer width='100%' height={200}>
                     <BarChart
